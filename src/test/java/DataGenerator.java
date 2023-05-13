@@ -28,10 +28,17 @@ public class DataGenerator {
         return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
-    public static String generateCity() {
+    public static String generateCityInList() {
         // TODO: добавить логику для объявления переменной city и задания её значения, генерацию можно выполнить
         // с помощью Faker, либо используя массив валидных городов и класс Random
-        String[] city = {"Кемерово", "Майкоп", "Москва", "Симферополь", "Смоленск", "Тамбов", "Санкт-Петербург"};
+        String[] city = {"Москва", "Казань", "Санкт-Петербург"};
+        int rnd = new Random().nextInt(city.length);
+        return city[rnd];
+    }
+    public static String generateCityNotInList() {
+        // TODO: добавить логику для объявления переменной city и задания её значения, генерацию можно выполнить
+        // с помощью Faker, либо используя массив валидных городов и класс Random
+        String[] city = {"Волжский", "Саров", "Грозный", "Ялта"};
         int rnd = new Random().nextInt(city.length);
         return city[rnd];
     }
