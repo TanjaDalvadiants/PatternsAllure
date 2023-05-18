@@ -151,7 +151,7 @@ public class DeliveryTest {
     }
     @Test
     void shouldTestIfAgreementNotCheck(){
-        String date = DataGenerator.generateDate(3);
+        String date = DataGenerator.generateDate(4);
         $("[data-test-id='city'] input").setValue(DataGenerator.generateCityInList());
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(date);
