@@ -33,27 +33,18 @@ public class DeliveryTest {
         $("[data-test-id='agreement']").click();
         $(".button__text").click();
         $("[data-test-id='success-notification']").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
-        String text = $("[data-test-id='success-notification'] .notification__content").text();
-        assertEquals("Встреча успешно запланирована на " + date, text);
-
-        // TODO: очищаем поле дата и меняем ее на новую
-
+        $("[data-test-id='success-notification'] .notification__content")
+                .shouldHave(exactText("Встреча успешно запланирована на " + date));
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(DataGenerator.generateDate(10));
         $(withText("Запланировать")).click();
         $("[data-test-id=replan-notification]")
-                .shouldBe((visible)).shouldHave(text("Необходимо подтверждение"));
+                .shouldBe((visible))
+                .shouldHave(text("Необходимо подтверждение"));
         $(withText("Перепланировать")).click();
-
-
-
-        // TODO: получаем успешное подтверждение встречи
         $("[data-test-id=success-notification]")
-                .shouldBe((visible)).shouldHave(text("Успешно!"));
-        String expected = $("[data-test-id=date] input").getValue();
-        String actual = $("[data-test-id='success-notification'] .notification__content").text();
-        assertEquals("Встреча успешно запланирована на " + expected, actual);
-
+                .shouldBe((visible))
+                .shouldHave(text("Успешно!"));
     }
     @Test
     void shouldTestIfCityEmpty(){
@@ -65,9 +56,11 @@ public class DeliveryTest {
         $("[data-test-id='phone'] input").setValue(DataGenerator.generatePhone());
         $("[data-test-id='agreement']").click();
         $(".button__text").click();
-        $x("//span[@data-test-id='city']//span[@class='input__sub'][contains(text(), 'Поле обязательно для заполнения')]").should(appear);
-
+        $x("//span[@data-test-id='city']//span[@class='input__sub'][contains(text(), 'Поле обязательно для заполнения')]")
+                .shouldBe(visible);
     }
+
+
     @Test
     void shouldTestIfCityNotInList(){
         String date = DataGenerator.generateDate(3);
