@@ -23,28 +23,32 @@ public class DeliveryTest {
 
     @Test
     void shouldTestGoodPath() {
-        String date = DataGenerator.generateDate(3);
+        int addFirstDate = 4;
+        String firstDate = DataGenerator.generateDate(addFirstDate);
+        int addSecondDate = 10;
+        String secondDate = DataGenerator.generateDate(addSecondDate);
+
 
         $("[data-test-id='city'] input").setValue(DataGenerator.generateCityInList());
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id='date'] input").setValue(date);
+        $("[data-test-id='date'] input").setValue(firstDate);
         $("[data-test-id='name'] input").setValue(DataGenerator.generateName());
         $("[data-test-id='phone'] input").setValue(DataGenerator.generatePhone());
         $("[data-test-id='agreement']").click();
         $(".button__text").click();
         $("[data-test-id='success-notification']").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
         $("[data-test-id='success-notification'] .notification__content")
-                .shouldHave(exactText("Встреча успешно запланирована на " + date));
+                .shouldHave(exactText("Встреча успешно запланирована на " + firstDate));
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id='date'] input").setValue(DataGenerator.generateDate(10));
+        $("[data-test-id='date'] input").setValue(secondDate);
         $(withText("Запланировать")).click();
         $("[data-test-id=replan-notification]")
                 .shouldBe((visible))
                 .shouldHave(text("Необходимо подтверждение"));
         $(withText("Перепланировать")).click();
-        $("[data-test-id=success-notification]")
-                .shouldBe((visible))
-                .shouldHave(text("Успешно!"));
+        $("[data-test-id='success-notification']").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
+        $("[data-test-id='success-notification'] .notification__content")
+                .shouldHave(exactText("Встреча успешно запланирована на " + secondDate));
     }
     @Test
     void shouldTestIfCityEmpty(){
